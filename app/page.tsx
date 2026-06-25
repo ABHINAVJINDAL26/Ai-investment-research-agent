@@ -180,7 +180,7 @@ export default function Home() {
             </div>
             <div>
               <span className="font-extrabold text-base tracking-tight bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-                ANTIGRAVITY
+                EQUITYEDGE
               </span>
               <span className="text-[10px] block font-mono text-amber-500 tracking-widest leading-none font-bold">
                 INVESTMENT LAB
