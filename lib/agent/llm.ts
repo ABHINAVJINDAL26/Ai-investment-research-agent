@@ -15,7 +15,7 @@ class GeminiNativeWrapper {
   }
 
   async invoke(prompt: string): Promise<{ content: string; toString: () => string }> {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${this.apiKey}`;
     
     const requestBody = {
       contents: [
