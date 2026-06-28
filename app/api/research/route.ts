@@ -5,10 +5,22 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { companyName } = body;
+    let { companyName } = body;
 
     if (!companyName || typeof companyName !== "string" || !companyName.trim()) {
       return new Response(JSON.stringify({ error: "Company name is required." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    // Input sanitization: limit character length to prevent buffer/token attacks, 
+    // and strip HTML/Script/Bracket characters to prevent prompt injections.
+    companyName = companyName.trim().slice(0, 50);
+    companyName = companyName.replace(/[<>'"\{\}\[\]\\\/]/g, "");
+
+    if (!companyName) {
+      return new Response(JSON.stringify({ error: "Invalid company name after sanitization." }), {
         status: 400,
         headers: { "Content-Type": "application/json" }
       });

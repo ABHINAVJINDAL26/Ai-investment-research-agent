@@ -18,10 +18,10 @@ export default function CompanySearchBar({ onSearch, isLoading, placeholder }: C
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto mt-6">
-      <div className="relative flex items-center bg-slate-900/80 border-2 border-slate-700 focus-within:border-amber-500/80 rounded-2xl shadow-lg transition-all duration-300 p-2 backdrop-blur-md">
-        <div className="pl-3 text-slate-400">
-          <Search className="w-6 h-6" />
+    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto mt-4">
+      <div className="relative flex items-center bg-slate-950/40 border border-slate-800/80 focus-within:border-amber-500/60 focus-within:ring-4 focus-within:ring-amber-500/10 rounded-2xl shadow-2xl transition-all duration-500 p-2 backdrop-blur-xl">
+        <div className="pl-3 text-slate-500 transition-colors duration-300">
+          <Search className="w-5 h-5" />
         </div>
         <input
           type="text"
@@ -29,23 +29,23 @@ export default function CompanySearchBar({ onSearch, isLoading, placeholder }: C
           onChange={(e) => setQuery(e.target.value)}
           disabled={isLoading}
           placeholder={placeholder || "Enter company name (e.g., Zomato, Tesla, Infosys)..."}
-          className="w-full py-3 px-4 bg-transparent text-white placeholder-slate-400 focus:outline-none text-lg font-medium"
+          className="w-full py-2 px-3 bg-transparent text-white placeholder-slate-500 focus:outline-none text-base md:text-lg font-light tracking-wide transition-all duration-300"
         />
         <button
           type="submit"
           disabled={isLoading || !query.trim()}
-          className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 disabled:from-slate-800 disabled:to-slate-800 text-slate-950 disabled:text-slate-500 font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-md disabled:shadow-none whitespace-nowrap"
+          className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-600 hover:to-yellow-500 disabled:from-slate-900 disabled:to-slate-900 text-slate-950 disabled:text-slate-600 font-extrabold px-5 py-2.5 rounded-xl transition-all duration-300 shadow-md hover:shadow-amber-500/10 disabled:shadow-none whitespace-nowrap text-sm tracking-wide cursor-pointer disabled:cursor-not-allowed"
         >
           {isLoading ? (
-            <div className="w-5 h-5 border-2 border-slate-500 border-t-slate-900 rounded-full animate-spin" />
+            <div className="w-4 h-4 border-2 border-slate-500 border-t-slate-950 rounded-full animate-spin" />
           ) : (
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-4 h-4" />
           )}
-          {isLoading ? "Researching..." : "Research Stock"}
+          {isLoading ? "Running Pipeline..." : "Analyze Stock"}
         </button>
       </div>
-      <p className="text-center text-xs text-slate-500 mt-3 italic">
-        Powered by AI Agentic workflows. Always cross-check results before making investment decisions.
+      <p className="text-center text-[10px] text-slate-500 mt-2.5 font-mono tracking-wider uppercase">
+        ⚡ Structured Multi-Stage Agentic Verification
       </p>
     </form>
   );
