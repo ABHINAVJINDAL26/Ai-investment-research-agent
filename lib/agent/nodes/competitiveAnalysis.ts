@@ -38,8 +38,25 @@ export async function competitiveAnalysisNode(state: AgentState) {
     const response = await model.invoke(prompt);
     const resultJson = JSON.parse(response.content.toString());
     summary = resultJson.summary || "";
-    competitors = resultJson.competitors || [];
-    bullets = resultJson.bullets || [];
+    
+    // Normalize competitors to array of strings
+    if (Array.isArray(resultJson.competitors)) {
+      competitors = resultJson.competitors.map(String);
+    } else if (typeof resultJson.competitors === "string") {
+      competitors = resultJson.competitors.split(",").map((c: string) => c.trim()).filter(Boolean);
+    } else {
+      competitors = [];
+    }
+
+    // Normalize bullets to array of strings
+    if (Array.isArray(resultJson.bullets)) {
+      bullets = resultJson.bullets.map(String);
+    } else if (typeof resultJson.bullets === "string") {
+      bullets = [resultJson.bullets];
+    } else {
+      bullets = [];
+    }
+
     score = typeof resultJson.score === "number" ? resultJson.score : 50;
   } catch (error) {
     console.error("Error parsing competitor node output:", error);

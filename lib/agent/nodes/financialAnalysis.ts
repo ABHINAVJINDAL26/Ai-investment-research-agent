@@ -35,7 +35,14 @@ export async function financialAnalysisNode(state: AgentState) {
       const response = await model.invoke(prompt);
       const resultJson = JSON.parse(response.content.toString());
       const summary = resultJson.summary || "";
-      const bullets: string[] = resultJson.bullets || [];
+      let bullets: string[] = [];
+      if (Array.isArray(resultJson.bullets)) {
+        bullets = resultJson.bullets.map(String);
+      } else if (typeof resultJson.bullets === "string") {
+        bullets = [resultJson.bullets];
+      } else {
+        bullets = [];
+      }
       score = typeof resultJson.score === "number" ? resultJson.score : 50;
 
       finalFinancialsString = `Financial Health Score: ${score}/100 (Source: Alpha Vantage)\n\n${summary}\n\nKey Financial Metrics:\n` + 
@@ -71,7 +78,14 @@ export async function financialAnalysisNode(state: AgentState) {
       const response = await model.invoke(prompt);
       const resultJson = JSON.parse(response.content.toString());
       const summary = resultJson.summary || "";
-      const bullets: string[] = resultJson.bullets || [];
+      let bullets: string[] = [];
+      if (Array.isArray(resultJson.bullets)) {
+        bullets = resultJson.bullets.map(String);
+      } else if (typeof resultJson.bullets === "string") {
+        bullets = [resultJson.bullets];
+      } else {
+        bullets = [];
+      }
       score = typeof resultJson.score === "number" ? resultJson.score : 50;
 
       // Cap confidence/score if private/fallback data is used, as specified by the guidelines

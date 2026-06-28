@@ -38,7 +38,16 @@ export async function newsResearchNode(state: AgentState) {
     const response = await model.invoke(prompt);
     const resultJson = JSON.parse(response.content.toString());
     summary = resultJson.summary || "";
-    bullets = resultJson.bullets || [];
+    
+    // Normalize bullets to array of strings
+    if (Array.isArray(resultJson.bullets)) {
+      bullets = resultJson.bullets.map(String);
+    } else if (typeof resultJson.bullets === "string") {
+      bullets = [resultJson.bullets];
+    } else {
+      bullets = [];
+    }
+
     score = typeof resultJson.score === "number" ? resultJson.score : 50;
   } catch (error) {
     console.error("Error parsing news node output:", error);

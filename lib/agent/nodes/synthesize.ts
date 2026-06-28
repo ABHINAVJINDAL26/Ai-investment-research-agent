@@ -51,8 +51,23 @@ export async function synthesisNode(state: AgentState) {
     confidenceScore = typeof resultJson.confidenceScore === 'number' ? resultJson.confidenceScore : weightedScore;
     whyDidAIDecideThis = resultJson.whyDidAIDecideThis || "";
     riskLevel = resultJson.riskLevel || "MODERATE";
-    bullCase = resultJson.bullCase || [];
-    bearCase = resultJson.bearCase || [];
+    // Normalize bullCase to array of strings
+    if (Array.isArray(resultJson.bullCase)) {
+      bullCase = resultJson.bullCase.map(String);
+    } else if (typeof resultJson.bullCase === "string") {
+      bullCase = [resultJson.bullCase];
+    } else {
+      bullCase = [];
+    }
+
+    // Normalize bearCase to array of strings
+    if (Array.isArray(resultJson.bearCase)) {
+      bearCase = resultJson.bearCase.map(String);
+    } else if (typeof resultJson.bearCase === "string") {
+      bearCase = [resultJson.bearCase];
+    } else {
+      bearCase = [];
+    }
   } catch (error) {
     console.error("Error parsing synthesis node output:", error);
     finalVerdict = weightedScore >= 65 ? 'INVEST' : 'PASS';
